@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "6771d5ca-fff5-44bb-b0e4-fa24cc0fc3c6",
+		"name": "Zavrsni Rad ITA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16637117"
+	},
+	"item": [
+		{
+			"name": "https://randomuser.me/api/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"responseJson = pm.response.json()\r",
+							"results = responseJson.results\r",
+							"name = results[0].name\r",
+							"location = results[0].location\r",
+							"street = location.street\r",
+							"id = results[0].id\r",
+							"info = responseJson.info\r",
+							"\r",
+							"//Test nr. 1: Testing reponse status of API, which has to be 200\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"//Test nr. 2: JSON response has to have parameters 'results' and 'info'\r",
+							"\r",
+							"pm.test(\"JSON response has parameters 'results' and 'info'\", function () {\r",
+							"    pm.expect(responseJson.results).to.exist\r",
+							"    pm.expect(responseJson.info).to.exist\r",
+							"});\r",
+							"\r",
+							"//Test nr. 3: JSON parameters 'results' and 'info' need to contain data\r",
+							"\r",
+							"pm.test(\"JSON parameters 'results' and 'info' contain data\", function () {\r",
+							"    pm.expect(responseJson.results).to.not.be.eql(\"\")\r",
+							"    pm.expect(responseJson.info).to.not.be.eql(\"\")\r",
+							"});\r",
+							"\r",
+							"//Test nr. 4: Objects within 'name' have to return data in form of a string\r",
+							"pm.test(\"Object 'name' returns data in form of string\", function () {\r",
+							"    pm.expect(name.title).to.be.a('string')\r",
+							"    pm.expect(name.first).to.be.a('string')\r",
+							"    pm.expect(name.last).to.be.a('string')\r",
+							"});\r",
+							"\r",
+							"//Test nr. 5: In object 'street', 'number' must return number, while 'name' must return string\r",
+							"pm.test(\"Object 'street' returns number in 'street' and string in 'name'\", function () {\r",
+							"    pm.expect(street.number).to.be.a('number')\r",
+							"    pm.expect(street.name).to.be.a('string')\r",
+							"});\r",
+							"\r",
+							"//Test nr. 6: In object 'id', 'name' cannot be empty and 'value' cannot be null\r",
+							"pm.test(\"In object 'id' values in 'name' and 'value' are not empty\", function () {\r",
+							"    pm.expect(id.name).to.not.be.eql(\"\")\r",
+							"    pm.expect(id.value).to.not.be.eql(null)\r",
+							"})\r",
+							"\r",
+							"//Test nr 7: In parameter 'info', objects 'results' and 'page' have to return 1\r",
+							"pm.test(\"Objects 'results' and 'page' return 1\", function () {\r",
+							"    pm.expect(info.results).to.be.eql(1)\r",
+							"    pm.expect(info.results).to.be.eql(1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://randomuser.me/api/",
+					"protocol": "https",
+					"host": [
+						"randomuser",
+						"me"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
